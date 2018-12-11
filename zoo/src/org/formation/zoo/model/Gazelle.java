@@ -1,28 +1,20 @@
 package org.formation.zoo.model;
 
-public class Gazelle {
-	private static final double EATING_WEIGHT = 0.075;
-	private static final double SLEEPING_WEIGHT = -0.05;
-	private static final double RUNNING_WEIGHT = -0.01;
-	private static final double MIN_WEIGHT = 5.0;
-	private static final double MAX_WEIGHT = 100.0;
-	private static final int MAX_AGE = 12;
-	private static final int MIN_AGE = 0;
+public class Gazelle extends Animal{
 	
-	private String name;
-	private int age;
-	private double weight;
-	private int hornsLength;
+	private final double EATING_WEIGHT = 0.075;
+	private final double SLEEPING_WEIGHT = -0.05;
+	private final double RUNNING_WEIGHT = -0.01;
+	private final double MIN_WEIGHT = 5.0;
+	private final double MAX_WEIGHT = 100.0;
+	private final int MAX_AGE = 12;
+	private final int MIN_AGE = 0;
 
-	public Gazelle() {
-		this("Gazelle",MIN_AGE,MIN_WEIGHT,0);
-	}
+	
+	private int hornsLength;
 	
 	public Gazelle(String name, int age, double weight, int hornsLength) {
-		super();
-		setName(name);
-		setAge(age);
-		setWeight(weight);
+		super(name, age, weight);
 		setHornsLength(hornsLength);
 	}
 	
@@ -30,43 +22,26 @@ public class Gazelle {
 		return hornsLength;
 	}
 
-	public void setHornsLength(int hornsLength) {
-		this.hornsLength = hornsLength;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-	private void setName(String name) {
-		this.name = name;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	private void setAge(int age) {
+	protected void setAge(int age) {
 		if (age > MAX_AGE)
-			this.age = MAX_AGE;
+			 super.setAge(MAX_AGE);
 		else if (age < MIN_AGE)
-			this.age = MIN_AGE;
+			super.setAge(MIN_AGE);
 		else
-			this.age = age;
+			super.setAge(age);
 	}
 
-	public double getWeight() {
-		return weight;
-	}
-
-	private void setWeight(double weight) {
-		if(weight > MAX_WEIGHT)
-			this.weight = MAX_WEIGHT;
+	protected void setWeight(double weight) {
+		if(weight>MAX_WEIGHT)
+			super.setWeight(MAX_WEIGHT);
 		else if (weight < MIN_WEIGHT)
-			this.weight = MIN_WEIGHT;
-		else 
-			this.weight = weight;
+			super.setWeight(MIN_WEIGHT);
+		else
+			super.setWeight(weight);
+	}
+	
+	protected void setHornsLength(int hornsLength) {
+		this.hornsLength = hornsLength;
 	}
 	
 	public void eat() {
@@ -82,6 +57,6 @@ public class Gazelle {
 	}
 	
 	public String display() {
-		return String.join(" ","I'm the gazelle", getName(), "I am", Integer.toString(getAge()), "years old and I weigh", Double.toString(getWeight()));
+		return String.join(" ",super.display(),"and my horns are",Integer.toString(getHornsLength()),"cm long");
 	}
 }
