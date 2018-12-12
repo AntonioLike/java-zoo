@@ -1,14 +1,14 @@
 package org.formation.zoo.model;
 
-public class Elephant extends Animal {
+public final class Elephant extends Animal {
 
-	private final double EATING_WEIGHT = 15.9;
-	private final double SLEEPING_WEIGHT = -5.3;
-	private final double RUNNING_WEIGHT = -3.5;
-	private final double MIN_WEIGHT = 25.0;
-	private final double MAX_WEIGHT = 15000.0;
-	private final int MAX_AGE = 150;
-	private final int MIN_AGE = 0;
+	private static double EATING_WEIGHT = 15.9;
+	private static double SLEEPING_WEIGHT = -5.3;
+	private static double RUNNING_WEIGHT = -3.5;
+	private static double MIN_WEIGHT = 25.0;
+	private static double MAX_WEIGHT = 15000.0;
+	private static int MAX_AGE = 150;
+	private static int MIN_AGE = 0;
 	
 	public Elephant() {
 		this("Elephant",0,0);
@@ -30,6 +30,7 @@ public class Elephant extends Animal {
 
 	}
 	
+	@Override
 	public void run() {
 		setWeight(getWeight() + RUNNING_WEIGHT);
 	}

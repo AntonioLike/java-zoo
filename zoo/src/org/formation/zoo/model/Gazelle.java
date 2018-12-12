@@ -1,14 +1,14 @@
 package org.formation.zoo.model;
 
-public class Gazelle extends Animal{
+public final class Gazelle extends Animal{
 	
-	private final double EATING_WEIGHT = 0.075;
-	private final double SLEEPING_WEIGHT = -0.05;
-	private final double RUNNING_WEIGHT = -0.01;
-	private final double MIN_WEIGHT = 5.0;
-	private final double MAX_WEIGHT = 100.0;
-	private final int MAX_AGE = 12;
-	private final int MIN_AGE = 0;
+	private static double EATING_WEIGHT = 0.075;
+	private static double SLEEPING_WEIGHT = -0.05;
+	private static double RUNNING_WEIGHT = -0.01;
+	private static double MIN_WEIGHT = 5.0;
+	private static double MAX_WEIGHT = 100.0;
+	private static int MAX_AGE = 12;
+	private static int MIN_AGE = 0;
 
 	
 	private int hornsLength;
@@ -67,5 +67,11 @@ public class Gazelle extends Animal{
 	@Override
 	public String display() {
 		return String.join(" ",super.display(),"and my horns are",Integer.toString(getHornsLength()),"cm long");
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		System.out.println("Oof!");
+		super.finalize();
 	}
 }

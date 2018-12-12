@@ -8,7 +8,7 @@ import org.formation.zoo.model.Monkey;
 public class Zoo {
 	private Gazelle gazelle;
 	private Lion lion;
-	private Monkey monkey;	
+	private Monkey monkey;
 	private Elephant elephant;
 	
 	public Zoo() {
@@ -19,10 +19,11 @@ public class Zoo {
 	}
 	
 	public void display() {
-		System.out.println(lion.display());
-		System.out.println(gazelle.display());
-		System.out.println(monkey.display());
-		System.out.println(elephant.display());
+		System.out.println(lion);
+		if(gazelle != null)
+			System.out.println(gazelle);
+		System.out.println(monkey);
+		System.out.println(elephant);
 	}
 	
 	public void feed() {
@@ -30,6 +31,19 @@ public class Zoo {
 		gazelle.eat();
 		monkey.eat();
 		elephant.eat();
+		lion.eat(gazelle);
+	}
+	
+	public void devour() {
+		lion.eat(gazelle);
+		gazelle = null;
+		System.gc();
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -37,6 +51,7 @@ public class Zoo {
 
 		zoo.display();
 		zoo.feed();
+		zoo.devour();
 		zoo.display();
 	}
 }

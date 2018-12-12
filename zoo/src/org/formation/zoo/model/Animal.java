@@ -1,6 +1,6 @@
 package org.formation.zoo.model;
 
-public abstract class Animal {
+public abstract class Animal implements Being{
 	private String name;
 	private int age;
 	private double weight;
@@ -25,9 +25,44 @@ public abstract class Animal {
 		setWeight(weight);
 	}
 	
-	public abstract void eat();
-	public abstract void sleep();
+	@Override
+	public void eat(Gazelle gazelle) {
+		//FIXME throw an exception
+		System.out.println("Yuck!");
+	}
 
+	@Override
+	public void run() {
+				
+	}
+
+	@Override
+	public void jump() {
+				
+	}
+
+	@Override
+	public String sound() {
+		return "";
+	}
+	
+	/**
+	 * @return a string representing the animal(it's name, age, weight...)
+	 */
+	@Override
+	public String display() {
+		return String.join(" ","I'm a", this.getClass().getSimpleName(), "my name is", getName(), "I am", Integer.toString(getAge()), "years old I weigh", Double.toString(getWeight()), "Kg");
+	}
+	
+	/**
+	 * Be careful : Overriding possible with the display method.
+	 * method polymorphism!!
+	 */
+	@Override
+	public String toString() {
+		return display();
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -50,22 +85,5 @@ public abstract class Animal {
 
 	protected void setWeight(double weight) {
 		this.weight = weight ;
-	}
-	
-	
-	/**
-	 * @return a string representing the animal(it's name, age, weight...)
-	 */
-	public String display() {
-		return String.join(" ","I'm a", this.getClass().getSimpleName(), "my name is", getName(), "I am", Integer.toString(getAge()), "years old and I weigh", Double.toString(getWeight()), "Kg");
-	}
-	
-	/**
-	 * Be careful : Overriding possible with the display method.
-	 * method polymorphism!!
-	 */
-	@Override
-	public String toString() {
-		return display();
 	}
 }
