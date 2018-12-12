@@ -13,6 +13,10 @@ public class Gazelle extends Animal{
 	
 	private int hornsLength;
 	
+	public Gazelle() {
+		this("Gazelle",0,0,0);
+	}
+	
 	public Gazelle(String name, int age, double weight, int hornsLength) {
 		super(name, age, weight);
 		setHornsLength(hornsLength);
@@ -22,6 +26,7 @@ public class Gazelle extends Animal{
 		return hornsLength;
 	}
 
+	@Override
 	protected void setAge(int age) {
 		if (age > MAX_AGE)
 			 super.setAge(MAX_AGE);
@@ -31,6 +36,7 @@ public class Gazelle extends Animal{
 			super.setAge(age);
 	}
 
+	@Override
 	protected void setWeight(double weight) {
 		if(weight>MAX_WEIGHT)
 			super.setWeight(MAX_WEIGHT);
@@ -44,10 +50,12 @@ public class Gazelle extends Animal{
 		this.hornsLength = hornsLength;
 	}
 	
+	@Override
 	public void eat() {
 		setWeight(getWeight()+EATING_WEIGHT);
 	}
 	
+	@Override
 	public void sleep() {
 		setWeight(getWeight()+SLEEPING_WEIGHT);
 	}
@@ -56,6 +64,7 @@ public class Gazelle extends Animal{
 		setWeight(getWeight()+RUNNING_WEIGHT);
 	}
 	
+	@Override
 	public String display() {
 		return String.join(" ",super.display(),"and my horns are",Integer.toString(getHornsLength()),"cm long");
 	}

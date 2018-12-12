@@ -12,10 +12,15 @@ public class Monkey extends Animal{
 	private final int MIN_AGE = 0;
 	private final String SOUND = "OHOH";
 	
+	public Monkey() {
+		this("Monkey",0,0);
+	}
+	
 	public Monkey(String name, int age, double weight) {
 		super(name,age,weight);
 	}
 	
+	@Override
 	protected void setAge(int age) {
 		if(age > MAX_AGE)
 			super.setAge(MAX_AGE);
@@ -26,6 +31,7 @@ public class Monkey extends Animal{
 		
 	}
 
+	@Override
 	protected void setWeight(double weight) {
 		if(weight>MAX_WEIGHT)
 			super.setWeight(MAX_WEIGHT);
@@ -35,10 +41,12 @@ public class Monkey extends Animal{
 			super.setWeight(weight);
 	}
 	
+	@Override
 	public void eat() {
 		setWeight(getWeight()+EATING_WEIGHT);
 	}
 	
+	@Override
 	public void sleep() {
 		setWeight(getWeight()+SLEEPING_WEIGHT);
 	}

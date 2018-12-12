@@ -14,12 +14,19 @@ public abstract class Animal {
 //	protected int MIN_AGE;
 //	protected String SOUND;
 		
+	public Animal() {
+		this("Animal",0,0.0);
+	}
+	
 	public Animal(String name, int age, double weight) {
 		super();
 		setName(name);
 		setAge(age);
 		setWeight(weight);
 	}
+	
+	public abstract void eat();
+	public abstract void sleep();
 
 	public String getName() {
 		return name;
@@ -45,11 +52,12 @@ public abstract class Animal {
 		this.weight = weight ;
 	}
 	
+	
 	/**
 	 * @return a string representing the animal(it's name, age, weight...)
 	 */
 	public String display() {
-		return String.join(" ","I'm the", getName(), "I am", Integer.toString(getAge()), "years old and I weigh", Double.toString(getWeight()), "Kg");
+		return String.join(" ","I'm a", this.getClass().getSimpleName(), "my name is", getName(), "I am", Integer.toString(getAge()), "years old and I weigh", Double.toString(getWeight()), "Kg");
 	}
 	
 	/**

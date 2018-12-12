@@ -11,14 +11,40 @@ public class Lion extends Animal {
 	private final int MIN_AGE = 0;
 	private final String SOUND = "RAWR";	
 	
+	public Lion() {
+		this("Lion",0,0);
+	}
+	
 	public Lion(String name, int age, double weight) {
 		super(name,age,weight);
 	}
 		
+	@Override
+	protected void setAge(int age) {
+		if (age > MAX_AGE)
+			 super.setAge(MAX_AGE);
+		else if (age < MIN_AGE)
+			super.setAge(MIN_AGE);
+		else
+			super.setAge(age);
+	}
+
+	@Override
+	protected void setWeight(double weight) {
+		if(weight>MAX_WEIGHT)
+			super.setWeight(MAX_WEIGHT);
+		else if (weight < MIN_WEIGHT)
+			super.setWeight(MIN_WEIGHT);
+		else
+			super.setWeight(weight);
+	}
+
+	@Override
 	public void eat() {
 		setWeight(getWeight()+EATING_WEIGHT);
 	}
 	
+	@Override
 	public void sleep() {
 		setWeight(getWeight()+SLEEPING_WEIGHT);
 	}
