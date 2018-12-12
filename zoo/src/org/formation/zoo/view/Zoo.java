@@ -7,19 +7,30 @@ import org.formation.zoo.model.Monkey;
 
 public class Zoo {
 	private Gazelle gazelle;
-	private Lion lion;
+	private Lion lions[];
 	private Monkey monkey;
 	private Elephant elephant;
 	
-	public Zoo() {
-		this.gazelle = new Gazelle("Gazelle", 5, 70.0,10);
-		this.lion = new Lion("Lion", 3, 150.0);
-		this.monkey = new Monkey("Monkey", 7, 15);
-		this.elephant = new Elephant("Elephant", 5, 7500);
+	private void init()
+	{
+		lions[0] = new Lion("Lion",3,150.0);
+		lions[1] = new Lion();
+		lions[2] = new Lion("Leo",2,15);
 	}
 	
+	public Zoo() {
+		this.gazelle = new Gazelle("Gazelle", 5, 70.0,10);
+		lions = new Lion[3];
+		//("Lion", 3, 150.0);
+		this.monkey = new Monkey("Monkey", 7, 15);
+		this.elephant = new Elephant("Elephant", 5, 7500);
+		init();
+	}
+		
 	public void display() {
-		System.out.println(lion);
+		for (Lion lion : lions) {
+			System.out.println(lion);	
+		}
 		if(gazelle != null)
 			System.out.println(gazelle);
 		System.out.println(monkey);
@@ -27,15 +38,19 @@ public class Zoo {
 	}
 	
 	public void feed() {
-		lion.eat();
+		for (Lion lion : lions) {
+			lion.eat();	
+		}
 		gazelle.eat();
 		monkey.eat();
 		elephant.eat();
-		lion.eat(gazelle);
 	}
 	
 	public void devour() {
-		lion.eat(gazelle);
+		monkey.eat(gazelle);
+		elephant.eat(gazelle);
+		gazelle.eat(gazelle);
+		lions[0].eat(gazelle);
 		gazelle = null;
 		System.gc();
 		try {
@@ -54,4 +69,4 @@ public class Zoo {
 		zoo.devour();
 		zoo.display();
 	}
-}
+}                                        
