@@ -1,57 +1,56 @@
 package org.formation.zoo.view;
 
+import org.formation.zoo.model.Animal;
 import org.formation.zoo.model.Elephant;
 import org.formation.zoo.model.Gazelle;
 import org.formation.zoo.model.Lion;
 import org.formation.zoo.model.Monkey;
 
 public class Zoo {
-	private Gazelle gazelle;
-	private Lion lions[];
-	private Monkey monkey;
-	private Elephant elephant;
+	private Animal animals[];
 	
 	private void init()
 	{
-		lions[0] = new Lion("Lion",3,150.0);
-		lions[1] = new Lion();
-		lions[2] = new Lion("Leo",2,15);
+		animals[0] = new Gazelle("Gazelle", 5, 70.0,10);
+		animals[1] = new Monkey("Monkey", 7, 15);
+		animals[2] = new Elephant("Elephant", 5, 7500);
+		animals[3] = new Lion("Lion",3,150.0);
+		animals[4] = new Lion();
+		animals[5] = new Lion("Leo",2,15);
+		animals[6] = new Elephant();
+		animals[7] = new Gazelle();
+		animals[8] = new Monkey();
+		animals[9] = new Elephant();
 	}
 	
 	public Zoo() {
-		this.gazelle = new Gazelle("Gazelle", 5, 70.0,10);
-		lions = new Lion[3];
-		//("Lion", 3, 150.0);
-		this.monkey = new Monkey("Monkey", 7, 15);
-		this.elephant = new Elephant("Elephant", 5, 7500);
+		animals = new Animal[10];
 		init();
 	}
 		
 	public void display() {
-		for (Lion lion : lions) {
-			System.out.println(lion);	
+		for (Animal animal : animals) {
+			if (animal != null)
+				System.out.println(animal);
+			else 
+				System.out.println("The cage is empty!");
 		}
-		if(gazelle != null)
-			System.out.println(gazelle);
-		System.out.println(monkey);
-		System.out.println(elephant);
 	}
 	
 	public void feed() {
-		for (Lion lion : lions) {
-			lion.eat();	
+		for (Animal animal : animals) {
+			animal.eat();	
 		}
-		gazelle.eat();
-		monkey.eat();
-		elephant.eat();
 	}
 	
-	public void devour() {
-		monkey.eat(gazelle);
-		elephant.eat(gazelle);
-		gazelle.eat(gazelle);
-		lions[0].eat(gazelle);
-		gazelle = null;
+	public void devour(int eater, int eaten) {
+		if(animals[eaten] instanceof Gazelle) {
+			animals[eater].eat((Gazelle) animals[eaten]);
+			if(animals[eater] instanceof Lion)
+				animals[eaten] = null;
+		}
+		//FIXME add exception
+			
 		System.gc();
 		try {
 			Thread.sleep(100);
@@ -66,7 +65,7 @@ public class Zoo {
 
 		zoo.display();
 		zoo.feed();
-		zoo.devour();
+		zoo.devour(4,0);
 		zoo.display();
 	}
 }                                        
