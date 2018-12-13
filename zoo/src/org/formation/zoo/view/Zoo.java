@@ -44,19 +44,13 @@ public class Zoo {
 	}
 	
 	public void devour(int eater, int eaten) {
-		if(animals[eaten] instanceof Gazelle) {
-			animals[eater].eat((Gazelle) animals[eaten]);
-			if(animals[eater] instanceof Lion)
-				animals[eaten] = null;
-		}
-		//FIXME add exception
-			
-		System.gc();
 		try {
+			animals[eater].eat((Gazelle) animals[eaten]);
+			animals[eaten] = null;
+			System.gc();
 			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e1) {
+			System.out.println("yuck!");
 		}
 	}
 	

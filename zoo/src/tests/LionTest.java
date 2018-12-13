@@ -48,5 +48,4 @@ class LionTest {
 	void testSound() {
 		
 	}
-
 }

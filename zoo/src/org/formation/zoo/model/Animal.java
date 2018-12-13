@@ -26,10 +26,15 @@ public abstract class Animal implements Being{
 	}
 	
 	@Override
-	public void eat(Gazelle gazelle) {
-		//FIXME throw an exception
-		System.out.println("Yuck!");
+	@Deprecated
+	public void eat(Gazelle gazelle) throws Exception {
+		throw new Exception();
 	}
+	
+	@Override
+	public void eat(Being being) throws Exception {
+		throw new Exception();
+	}	
 
 	@Override
 	public void run() {
@@ -71,6 +76,10 @@ public abstract class Animal implements Being{
 		return age;
 	}
 
+	/**
+	 * Adapter Pattern
+	 * @return
+	 */
 	public double getWeight() {
 		return weight;
 	}
@@ -86,4 +95,5 @@ public abstract class Animal implements Being{
 	protected void setWeight(double weight) {
 		this.weight = weight ;
 	}
+
 }
