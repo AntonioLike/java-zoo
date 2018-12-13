@@ -49,10 +49,16 @@ public final class Lion extends Animal{
 	public void eat(Gazelle gazelle) {
 		setWeight(getWeight()+gazelle.getWeight()/3);
 	}
-		
+	
+	@Deprecated
 	@Override
 	public void eat(Being being) throws Exception {
-		setWeight(getWeight()+being.getWeight()/3);
+	//	setWeight(getWeight()+being.getFood()/3);
+	}
+
+	@Override
+	public void eat(Eatable being) throws Exception {
+		setWeight(getWeight()+being.getFood()/3);
 	}
 
 	@Override

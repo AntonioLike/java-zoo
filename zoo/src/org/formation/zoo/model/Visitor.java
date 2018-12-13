@@ -1,6 +1,6 @@
 package org.formation.zoo.model;
 
-public class Visitor implements Being {
+public class Visitor implements Being, Eatable{
 
 	public Visitor() {
 		// TODO Auto-generated constructor stub
@@ -13,12 +13,23 @@ public class Visitor implements Being {
 	}
 
 	@Override
+	public double getFood() {
+		return 3;
+	}
+	
+	@Override
+	public void eat(Eatable being) throws Exception {
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
 	@Deprecated
 	public void eat(Gazelle gazelle) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
 
+	@Deprecated
 	@Override
 	public void eat(Being being) throws Exception {
 		// TODO Auto-generated method stub
@@ -54,5 +65,10 @@ public class Visitor implements Being {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@Override
+	protected void finalize() throws Throwable {
+		System.out.println("Oof!");
+		super.finalize();
+	}
 }

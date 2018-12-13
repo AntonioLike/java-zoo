@@ -31,10 +31,16 @@ public abstract class Animal implements Being{
 		throw new Exception();
 	}
 	
+	@Deprecated
 	@Override
 	public void eat(Being being) throws Exception {
 		throw new Exception();
-	}	
+	}
+	
+	@Override
+	public void eat(Eatable being) throws Exception {
+		throw new Exception();		
+	}
 
 	@Override
 	public void run() {
@@ -96,4 +102,9 @@ public abstract class Animal implements Being{
 		this.weight = weight ;
 	}
 
+	@Override
+	protected void finalize() throws Throwable {
+		System.out.println("Oof!");
+		super.finalize();
+	}
 }
