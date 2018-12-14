@@ -1,6 +1,12 @@
 package org.formation.zoo.model;
 
-public abstract class Animal implements Being{
+import java.io.Serializable;
+
+public abstract class Animal implements Being,Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private int age;
 	private double weight;
@@ -41,7 +47,6 @@ public abstract class Animal implements Being{
 	public void eat(Eatable being) throws Exception {
 		throw new Exception();		
 	}
-
 	@Override
 	public void run() {
 				

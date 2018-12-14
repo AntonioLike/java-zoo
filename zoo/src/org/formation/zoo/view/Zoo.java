@@ -4,17 +4,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.formation.zoo.model.Animal;
-import org.formation.zoo.model.Being;
 import org.formation.zoo.model.Eatable;
 import org.formation.zoo.model.Elephant;
 import org.formation.zoo.model.Gazelle;
 import org.formation.zoo.model.Lion;
 import org.formation.zoo.model.Monkey;
 import org.formation.zoo.model.Visitor;
+import org.formation.zoo.tools.Broom;
 
 public class Zoo {
 	private Animal animals[];
-	private Visitor visitors[];
+	private Visitor visitors[];	
+	
 	
 	private void init()
 	{
@@ -28,14 +29,27 @@ public class Zoo {
 		animals[7] = new Gazelle();
 		animals[8] = new Monkey();
 		animals[9] = new Elephant();
-		for(int i = 0; i<visitors.length;i++)
-			visitors[i] = new Visitor();
 	}
 	
 	public Zoo() {
 		animals = new Animal[10];
-		visitors = new Visitor[5];
+		visitors = new Visitor[Visitor.MAX];
 		init();
+	}
+	
+	public void newVisitor() {
+		if(Visitor.getAmount()<10)
+			visitors[Visitor.getAmount()]=new Visitor();
+		else 
+			System.out.println("The zoo is full, you'll have to wait until a visitor leaves or dies :(!");
+	}
+	
+	public void visitorleaves() {
+		if(Visitor.getAmount()>0) {
+			visitors[Visitor.getAmount()-1]=null;
+			System.out.println(String.join(" ", "Visitor left", Integer.toString(Visitor.getAmount()), "left"));
+		}
+		Broom.sweep();
 	}
 	
 	public void display(int id) {
@@ -88,8 +102,7 @@ public class Zoo {
 			try {
 				animals[eater].eat((Eatable) animals[eaten]);
 				animals[eaten] = null;
-				System.gc();
-				Thread.sleep(100);
+				Broom.sweep();
 			} catch (Exception e1) {
 				System.out.println("yuck!");
 			}
@@ -97,16 +110,17 @@ public class Zoo {
 			try {
 				animals[eater].eat((Eatable) visitors[eaten]);
 				visitors[eaten] = null;
-				System.gc();
-				Thread.sleep(100);
+				Broom.sweep();
 			} catch (Exception e1) {
 				System.out.println("yuck!");
 			}
 	}
 	
+	static int test = 0;
+	
 	public static void main(String[] args) {
 		Zoo zoo = new Zoo();
-
+		
 		final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 		final PrintStream originalOut = System.out;
 		
@@ -117,6 +131,16 @@ public class Zoo {
 		zoo.display();
 		zoo.feed();
 
+		zoo.newVisitor();
+		
+		for(int i=0; i<10; i++)
+			zoo.newVisitor();
+		
+		zoo.display();
+		
+		zoo.visitorleaves();
+		zoo.visitorleaves();
+		
 		for (int i = 0; i<zoo.getAmountAnimals();i++)
 			for(int j = 0; j<zoo.getAmountAnimals();j++) {
 				System.out.println(String.join(" ", zoo.getSpecies(i), "eats", zoo.getSpecies(j)));

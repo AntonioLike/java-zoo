@@ -1,6 +1,10 @@
 package org.formation.zoo.model;
 
 public final class Elephant extends Animal {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static double EATING_WEIGHT = 15.9;
 	private static double SLEEPING_WEIGHT = -5.3;

@@ -2,7 +2,10 @@ package org.formation.zoo.model;
 
 
 public class Monkey extends Animal{
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static double EATING_WEIGHT = 0.3;
 	private static double SLEEPING_WEIGHT = -0.1;
 	private static double RUNNING_WEIGHT = -0.15;

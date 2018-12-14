@@ -1,6 +1,10 @@
 package org.formation.zoo.model;
 
 public final class Gazelle extends Animal implements Eatable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static double EATING_WEIGHT = 0.075;
 	private static double SLEEPING_WEIGHT = -0.05;

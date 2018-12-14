@@ -6,8 +6,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.formation.zoo.view.Zoo;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

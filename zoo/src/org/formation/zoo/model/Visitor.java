@@ -1,10 +1,24 @@
 package org.formation.zoo.model;
 
-public class Visitor implements Being, Eatable{
+import java.io.Serializable;
 
+public class Visitor implements Being, Eatable, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static int amount = 0;
+	public static int MAX = 10;
+	
 	public Visitor() {
-		// TODO Auto-generated constructor stub
+		amount ++;
 	}
+
+	public static int getAmount() {
+		return amount;
+	}
+
+
 
 	@Override
 	public void eat() {
@@ -69,6 +83,7 @@ public class Visitor implements Being, Eatable{
 	@Override
 	protected void finalize() throws Throwable {
 		System.out.println("Oof!");
+		amount --;
 		super.finalize();
 	}
 }

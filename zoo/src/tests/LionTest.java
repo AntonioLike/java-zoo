@@ -33,7 +33,7 @@ class LionTest {
 		Gazelle gazelle = new Gazelle("Gazelle",2,60,5);
 		double gazelleWeight = gazelle.getWeight()/3;
 		double weight = lion.getWeight();
-		lion.eat(gazelle);
+		//lion.eat(gazelle);
 		assertEquals(weight+gazelleWeight, lion.getWeight());
 		gazelle = null;
 		System.gc();
