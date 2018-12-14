@@ -1,5 +1,7 @@
 package org.formation.zoo.model;
 
+import org.formation.zoo.technical.YuckException;
+
 public final class Lion extends Animal{
 	/**
 	 * 
@@ -56,12 +58,12 @@ public final class Lion extends Animal{
 	
 	@Deprecated
 	@Override
-	public void eat(Being being) throws Exception {
+	public void eat(Being being) throws YuckException {
 	//	setWeight(getWeight()+being.getFood()/3);
 	}
 
 	@Override
-	public void eat(Eatable being) throws Exception {
+	public void eat(Eatable being) throws YuckException {
 		setWeight(getWeight()+being.getFood()/3);
 	}
 

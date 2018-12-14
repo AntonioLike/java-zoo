@@ -2,6 +2,8 @@ package org.formation.zoo.model;
 
 import java.io.Serializable;
 
+import org.formation.zoo.technical.YuckException;
+
 public class Visitor implements Being, Eatable, Serializable{
 	/**
 	 * 
@@ -32,8 +34,8 @@ public class Visitor implements Being, Eatable, Serializable{
 	}
 	
 	@Override
-	public void eat(Eatable being) throws Exception {
-		// TODO Auto-generated method stub
+	public void eat(Eatable being) throws YuckException{
+		throw new YuckException();
 	}
 	
 	@Override
@@ -45,9 +47,8 @@ public class Visitor implements Being, Eatable, Serializable{
 
 	@Deprecated
 	@Override
-	public void eat(Being being) throws Exception {
-		// TODO Auto-generated method stub
-
+	public void eat(Being being)  throws YuckException{
+		throw new YuckException();
 	}
 
 	@Override
@@ -82,7 +83,6 @@ public class Visitor implements Being, Eatable, Serializable{
 	
 	@Override
 	protected void finalize() throws Throwable {
-		System.out.println("Oof!");
 		amount --;
 		super.finalize();
 	}

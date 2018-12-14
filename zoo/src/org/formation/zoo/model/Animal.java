@@ -2,6 +2,8 @@ package org.formation.zoo.model;
 
 import java.io.Serializable;
 
+import org.formation.zoo.technical.YuckException;
+
 public abstract class Animal implements Being,Serializable{
 	/**
 	 * 
@@ -33,19 +35,19 @@ public abstract class Animal implements Being,Serializable{
 	
 	@Override
 	@Deprecated
-	public void eat(Gazelle gazelle) throws Exception {
-		throw new Exception();
+	public void eat(Gazelle gazelle) throws YuckException {
+		throw new YuckException();
 	}
 	
 	@Deprecated
 	@Override
-	public void eat(Being being) throws Exception {
-		throw new Exception();
+	public void eat(Being being) throws YuckException {
+		throw new YuckException();
 	}
 	
 	@Override
-	public void eat(Eatable being) throws Exception {
-		throw new Exception();		
+	public void eat(Eatable being) throws YuckException {
+		throw new YuckException();		
 	}
 	@Override
 	public void run() {
@@ -109,7 +111,6 @@ public abstract class Animal implements Being,Serializable{
 
 	@Override
 	protected void finalize() throws Throwable {
-		System.out.println("Oof!");
 		super.finalize();
 	}
 }
