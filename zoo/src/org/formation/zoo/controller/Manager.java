@@ -3,12 +3,14 @@ import java.util.List;
 import java.util.Vector;
 
 import org.formation.zoo.model.Animal;
+import org.formation.zoo.model.Cage;
 import org.formation.zoo.model.Eatable;
 import org.formation.zoo.model.Elephant;
 import org.formation.zoo.model.Gazelle;
 import org.formation.zoo.model.Lion;
 import org.formation.zoo.model.Monkey;
 import org.formation.zoo.model.Visitor;
+import org.formation.zoo.technical.CageException;
 import org.formation.zoo.technical.YuckException;
 import org.formation.zoo.tools.Broom;
 import org.formation.zoo.view.TypesOfEatable;
@@ -16,27 +18,39 @@ import org.formation.zoo.view.TypesOfEatable;
 public final class Manager {
 	private static Manager instance = new Manager();
 
-	private List<Animal> animals; 
+	private List<Cage> cages; 
 	
 	private Visitor visitors[];	
+
+	private void createCages() {
+		cages = new Vector<>();
+		for(int i = 0; i<4;i++)
+			for (int j = 0; j < 4; j++) 
+				cages.add(new Cage(i,j));		
+	}
 	
 	private void init()
-	{
-		
-		animals.add(new Gazelle("Gazelle", 5, 70.0,10));
-		animals.add(new Monkey("Monkey", 7, 15));
-		animals.add(new Elephant("Elephant", 5, 7500));
-		animals.add(new Lion("Lion",3,150.0));
-		animals.add(new Lion());
-		animals.add(new Lion("Leo",2,15));
-		animals.add(new Elephant());
-		animals.add(new Gazelle());
-		animals.add(new Monkey());
-		animals.add(new Elephant());
+	{	
+		try {
+			cages.get(0).enter(new Gazelle("Gazelle", 5, 70.0,10));
+			cages.get(1).enter(new Monkey("Monkey", 7, 15));
+			cages.get(2).enter(new Elephant("Elephant", 5, 7500));
+			cages.get(3).enter(new Lion("Lion",3,150.0));
+			cages.get(4).enter(new Lion());
+			cages.get(5).enter(new Lion("Leo",2,15));
+			cages.get(6).enter(new Elephant());
+			cages.get(7).enter(new Gazelle());
+			cages.get(8).enter(new Monkey());
+			cages.get(9).enter(new Elephant());
+		} catch (CageException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 	private Manager() {
-		animals = new Vector<>();
+		cages = new Vector<>();
+		createCages();
 		visitors = new Visitor[Visitor.MAX];
 		init();
 	}
@@ -46,7 +60,11 @@ public final class Manager {
 	}
 	
 	public String getAnimal(int id) {
-		return animals.get(id).toString();
+		return cages.get(id).toString();
+	}
+	
+	public void setCages(List<Cage> cages) {
+		this.cages = cages; 
 	}
 	
 	public String newVisitor() {
@@ -67,7 +85,7 @@ public final class Manager {
 	}
 
 	public boolean isCageEmpty(int id) {
-		return id<animals.size()? animals.get(id)==null:false;
+		return id<cages.size()? cages.get(id).isOpen():false;
 	}
 	
 	public boolean isVisitorAlive(int id) {
@@ -75,62 +93,78 @@ public final class Manager {
 	}
 	
 	public int getAmountAnimals() {
-		return animals.size();
+		int amountAnimals = 0;
+		for (int i = 0; i < cages.size(); i++) {
+			if(cages.get(i).isOpen())
+				amountAnimals++;
+		}
+		return amountAnimals;
 	}
 	
 	public int getAmountVisitors() {
+		for (int i = 0; i < visitors.length; i++) {
+			if(visitors[i]==null)
+				return i;
+		}
 		return visitors.length;
 	}
 	
-	public String getSpecies(int i) {
-		return animals.get(i)==null? "":animals.get(i).getClass().getSimpleName();
+	public String getSpecies(int i){
+		return cages.get(i).isOpen()? cages.get(i).getSpecies():"";
 	}
 	
 	public String[] getAnimals() {
 		String[] animalsString = new String[getAmountAnimals()];
 		for (int i = 0; i < animalsString.length; i++) {
-			if(isCageEmpty(i))
-				animalsString[i] = "Empty Cage";
-			else
-				animalsString[i] = getAnimal(i);
+			animalsString[i] = getAnimal(i);
 		}
 		return animalsString;
 	}
 	
-	public String display(int id) {
-		return Manager.getInstance().display(id);
-	}
-	
 	public void feed() {
-		for (Animal animal : animals) {
-			animal.eat();
+		for (Cage cage : cages) {
+			if(cage.isOpen())
+				try {
+					cage.feed();
+				} catch (CageException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
 		}
 	}
 	
-	public String devour(int eater, int eaten,TypesOfEatable type) { 
+	public String devour(int eater, int eaten,TypesOfEatable type) {
+		Animal eatenAnimal = null;
 		if(type.equals(TypesOfEatable.ANIMAL) ) {
-			if(animals.get(eaten) == null || animals.get(eater) == null)
+			if((!cages.get(eaten).isOpen()) || (!cages.get(eater).isOpen()))
 				return "The cage is empty";
-			else if(!(animals.get(eaten) instanceof Eatable))
-				return String.join(" ", getSpecies(eaten), "is not eatable");
-			else 
+			else
 				try {
-					animals.get(eater).eat((Eatable) animals.get(eaten));
-					animals.set(eaten, null);
-					Broom.sweep();
-					return "Oof!";
-				} catch (YuckException e) {
+					if(!(cages.get(eaten).isEatable()))
+						return String.join(" ", getSpecies(eaten), "is not eatable");
+					else 
+						eatenAnimal = cages.get(eaten).exit();
+						try {
+							cages.get(eater).feed((Eatable)eatenAnimal);
+							Broom.sweep();
+							return cages.get(eater).getSpecies() + " ate " + eatenAnimal.getName(); 
+						} catch (YuckException e) {
+							cages.get(eaten).enter(eatenAnimal);
+							return e.getMessage();
+						}
+				} catch (CageException e) {
+					// TODO Auto-generated catch block
 					return e.getMessage();
 				}
 		}
 		else {
-			if(animals.get(eater) == null)
+			if(!cages.get(eater).isOpen())
 				return "The cage is empty";
 			else if(visitors[eaten] == null)
 				return "There's no visitors";
 			else
 				try {
-					animals.get(eater).eat((Eatable) visitors[eaten]);
+					cages.get(eater).feed((Eatable) visitors[eaten]);
 					visitors[eaten] = null;
 					Broom.sweep();
 					return "Oof!";

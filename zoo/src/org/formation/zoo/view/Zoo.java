@@ -69,8 +69,10 @@ public class Zoo {
 		
 		for (int i = 0; i<zoo.getAmountAnimals();i++)
 			for(int j = 0; j<zoo.getAmountAnimals();j++) {
-				System.out.println(String.join(" ", zoo.getSpecies(i), "eats", zoo.getSpecies(j)));
-				System.out.println(zoo.devour(i, j,TypesOfEatable.ANIMAL));
+				if(i!=j) {
+					System.out.println(String.join(" ", zoo.getSpecies(i), "eats", zoo.getSpecies(j)));
+					System.out.println(zoo.devour(i, j,TypesOfEatable.ANIMAL));
+				}
 			}
 		
 		for (int i = 0; i<zoo.getAmountAnimals();i++)
