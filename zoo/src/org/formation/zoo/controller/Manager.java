@@ -3,14 +3,13 @@ import java.util.List;
 import java.util.Vector;
 
 import org.formation.zoo.model.Animal;
-import org.formation.zoo.model.Cage;
 import org.formation.zoo.model.Eatable;
-import org.formation.zoo.model.Elephant;
-import org.formation.zoo.model.Gazelle;
-import org.formation.zoo.model.Lion;
-import org.formation.zoo.model.Monkey;
 import org.formation.zoo.model.Visitor;
+import org.formation.zoo.persistence.Dao;
+import org.formation.zoo.persistence.DaoFactory;
+import org.formation.zoo.service.CagePOJO;
 import org.formation.zoo.technical.CageException;
+import org.formation.zoo.technical.ManagedCage;
 import org.formation.zoo.technical.YuckException;
 import org.formation.zoo.tools.Broom;
 import org.formation.zoo.view.TypesOfEatable;
@@ -18,20 +17,18 @@ import org.formation.zoo.view.TypesOfEatable;
 public final class Manager {
 	private static Manager instance = new Manager();
 
-	private List<Cage> cages; 
+	private List<ManagedCage> cages; 
 	
 	private Visitor visitors[];	
-
-	private void createCages() {
-		cages = new Vector<>();
-		for(int i = 0; i<4;i++)
-			for (int j = 0; j < 4; j++) 
-				cages.add(new Cage(i,j));		
-	}
 	
 	private void init()
 	{	
-		try {
+		Dao<CagePOJO> dao = DaoFactory.getInstance().getDao();
+		List<CagePOJO> pojos = dao.readAll();
+		for(CagePOJO pojo : pojos) 
+			cages.add(new ManagedCage(pojo,dao));
+		
+		/*try {
 			cages.get(0).enter(new Gazelle("Gazelle", 5, 70.0,10));
 			cages.get(1).enter(new Monkey("Monkey", 7, 15));
 			cages.get(2).enter(new Elephant("Elephant", 5, 7500));
@@ -45,14 +42,13 @@ public final class Manager {
 		} catch (CageException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}*/		
 	}
 	
 	private Manager() {
 		cages = new Vector<>();
-		createCages();
-		visitors = new Visitor[Visitor.MAX];
 		init();
+		visitors = new Visitor[Visitor.MAX];
 	}
 
 	public static Manager getInstance() {
@@ -61,10 +57,6 @@ public final class Manager {
 	
 	public String getAnimal(int id) {
 		return cages.get(id).toString();
-	}
-	
-	public void setCages(List<Cage> cages) {
-		this.cages = cages; 
 	}
 	
 	public String newVisitor() {
@@ -122,7 +114,7 @@ public final class Manager {
 	}
 	
 	public void feed() {
-		for (Cage cage : cages) {
+		for (ManagedCage cage : cages) {
 			if(cage.isOpen())
 				try {
 					cage.feed();

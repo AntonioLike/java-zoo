@@ -8,8 +8,6 @@ import org.formation.zoo.service.CagePOJO;
 public class HardCodedDao implements Dao<CagePOJO> {
 	private List<CagePOJO> pojos;
 	
-	
-	
 	public HardCodedDao() {
 		pojos = new ArrayList<CagePOJO>();
 		init();
@@ -17,9 +15,10 @@ public class HardCodedDao implements Dao<CagePOJO> {
 
 	private void init() {
 		addPojo(1,1,0, "Lion","Simba",10,123);
+		addPojo(1,10,1,"Gazelle","Bambi",2,125);
 	}
 	
-	private void addPojo(int x, int idAnimal, int y, String codeAnimal, String name, int age,
+	private void addPojo(int x, int y, int idAnimal, String codeAnimal, String name, int age,
 			double weight) {
 		CagePOJO cagePOJO = new CagePOJO();
 		cagePOJO.setAge(age);

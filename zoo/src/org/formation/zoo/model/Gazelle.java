@@ -20,6 +20,10 @@ public final class Gazelle extends Animal implements Eatable{
 		this("Gazelle", 0, 0, 0);
 	}
 
+	public Gazelle(String name, int age, double weight) {
+		this(name,age,weight,0);
+	}
+	
 	public Gazelle(String name, int age, double weight, int hornsLength) {
 		super(name, age, weight);
 		setHornsLength(hornsLength);

@@ -73,15 +73,18 @@ public class Cage implements Serializable{
 	}	
 
 	public void feed() throws CageException{
-		if(animal == null)
-			throw new CageException();
-		animal.eat();
+		if(animal != null)
+			animal.eat();
 	}
 
 	public boolean isEatable() throws CageException {
 		return animal instanceof Eatable;
 	}
-
+	
+	public Animal getAnimal() {
+		return animal;
+	}
+	
 	public void feed(Eatable being) throws YuckException {
 		if(isOpen())
 			animal.eat(being);
