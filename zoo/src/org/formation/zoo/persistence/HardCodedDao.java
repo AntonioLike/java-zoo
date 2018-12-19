@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.formation.zoo.service.CagePOJO;
+import org.formation.zoo.service.GazellePOJO;
 
 public class HardCodedDao implements Dao<CagePOJO> {
 	private List<CagePOJO> pojos;
@@ -14,12 +15,19 @@ public class HardCodedDao implements Dao<CagePOJO> {
 	}
 
 	private void init() {
-		addPojo(1,1,0, "Lion","Simba",10,123);
-		addPojo(1,10,1,"Elephant","Djumbo",2,1125);
-		addPojo(1,20,2,"Gazelle","Bambi",3,70);
+		pojos.add(addPojo(1,1,0, "Lion","Simba",10,123));
+		pojos.add(addPojo(1,10,1,"Elephant","Djumbo",2,1125));
+		pojos.add(addGazelle(1,20,2,"Gazelle","Bambi",3,70,0,15));
 	}
-	
-	private void addPojo(int x, int y, int idAnimal, String codeAnimal, String name, int age,
+		
+	private CagePOJO addGazelle(int x, int y, int idAnimal, String codeAnimal, String name, int age,
+			double weight, int idGazelle, int hornsLength) {
+			CagePOJO cp = addPojo(x, y, idAnimal, codeAnimal, name, age, weight);
+			cp.setGaz(new GazellePOJO(idGazelle,idAnimal,hornsLength));
+			return cp;
+	}
+
+	private CagePOJO addPojo(int x, int y, int idAnimal, String codeAnimal, String name, int age,
 			double weight) {
 		CagePOJO cagePOJO = new CagePOJO();
 		cagePOJO.setAge(age);
@@ -29,7 +37,7 @@ public class HardCodedDao implements Dao<CagePOJO> {
 		cagePOJO.setWeight(weight);
 		cagePOJO.setX(x);
 		cagePOJO.setY(y);
-		pojos.add(cagePOJO);
+		return cagePOJO;
 	}
 
 	@Override

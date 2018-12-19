@@ -138,7 +138,7 @@ public final class Manager {
 						eatenAnimal = cages.get(eaten).exit();
 						try {
 							cages.get(eater).feed((Eatable)eatenAnimal);
-							//Broom.sweep();
+							Broom.sweep();
 							return cages.get(eater).getSpecies() + " ate " + eatenAnimal.getName(); 
 						} catch (YuckException e) {
 							cages.get(eaten).enter(eatenAnimal);

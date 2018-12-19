@@ -12,6 +12,13 @@ public class CagePOJO implements Serializable{
 	private String codeAnimal;
 	private String name;
 	private double weight;
+	private GazellePOJO gaz;
+	public GazellePOJO getGaz() {
+		return gaz;
+	}
+	public void setGaz(GazellePOJO gaz) {
+		this.gaz = gaz;
+	}
 	public int getX() {
 		return x;
 	}

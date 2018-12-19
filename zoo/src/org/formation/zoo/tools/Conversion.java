@@ -26,7 +26,7 @@ public abstract class Conversion {
 					typesOfParameters = new Class<?>[4];
 					typesOfParameters[3] = int.class;
 					theValues = new Object[4];
-					theValues[3] = 12;
+					theValues[3] = cagePOJO.getGaz().getHornsLength();
 				}
 				else {
 					typesOfParameters = new Class<?>[3];

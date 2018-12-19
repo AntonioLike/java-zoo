@@ -27,7 +27,7 @@ public class Cage implements Serializable{
 	}
 	
 	public void enter(Animal animal) throws CageException {
-		if(isEmpty())
+		if(!isEmpty())
 			throw new CageException();
 		this.animal = animal;
 		empty = false;
