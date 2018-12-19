@@ -15,7 +15,8 @@ public class HardCodedDao implements Dao<CagePOJO> {
 
 	private void init() {
 		addPojo(1,1,0, "Lion","Simba",10,123);
-		addPojo(1,10,1,"Gazelle","Bambi",2,125);
+		addPojo(1,10,1,"Elephant","Djumbo",2,1125);
+		addPojo(1,20,2,"Gazelle","Bambi",3,70);
 	}
 	
 	private void addPojo(int x, int y, int idAnimal, String codeAnimal, String name, int age,

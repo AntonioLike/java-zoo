@@ -77,7 +77,7 @@ public final class Manager {
 	}
 
 	public boolean isCageEmpty(int id) {
-		return id<cages.size()? cages.get(id).isOpen():false;
+		return id<cages.size()? cages.get(id).isEmpty():false;
 	}
 	
 	public boolean isVisitorAlive(int id) {
@@ -87,7 +87,7 @@ public final class Manager {
 	public int getAmountAnimals() {
 		int amountAnimals = 0;
 		for (int i = 0; i < cages.size(); i++) {
-			if(cages.get(i).isOpen())
+			if(!cages.get(i).isEmpty())
 				amountAnimals++;
 		}
 		return amountAnimals;
@@ -102,11 +102,11 @@ public final class Manager {
 	}
 	
 	public String getSpecies(int i){
-		return cages.get(i).isOpen()? cages.get(i).getSpecies():"";
+		return !cages.get(i).isEmpty()? cages.get(i).getSpecies():"";
 	}
 	
 	public String[] getAnimals() {
-		String[] animalsString = new String[getAmountAnimals()];
+		String[] animalsString = new String[cages.size()];
 		for (int i = 0; i < animalsString.length; i++) {
 			animalsString[i] = getAnimal(i);
 		}
@@ -115,7 +115,7 @@ public final class Manager {
 	
 	public void feed() {
 		for (ManagedCage cage : cages) {
-			if(cage.isOpen())
+			if(!cage.isEmpty())
 				try {
 					cage.feed();
 				} catch (CageException e) {
@@ -128,7 +128,7 @@ public final class Manager {
 	public String devour(int eater, int eaten,TypesOfEatable type) {
 		Animal eatenAnimal = null;
 		if(type.equals(TypesOfEatable.ANIMAL) ) {
-			if((!cages.get(eaten).isOpen()) || (!cages.get(eater).isOpen()))
+			if(cages.get(eaten).isEmpty() || cages.get(eater).isEmpty())
 				return "The cage is empty";
 			else
 				try {
@@ -138,7 +138,7 @@ public final class Manager {
 						eatenAnimal = cages.get(eaten).exit();
 						try {
 							cages.get(eater).feed((Eatable)eatenAnimal);
-							Broom.sweep();
+							//Broom.sweep();
 							return cages.get(eater).getSpecies() + " ate " + eatenAnimal.getName(); 
 						} catch (YuckException e) {
 							cages.get(eaten).enter(eatenAnimal);
@@ -150,7 +150,7 @@ public final class Manager {
 				}
 		}
 		else {
-			if(!cages.get(eater).isOpen())
+			if(cages.get(eater).isEmpty())
 				return "The cage is empty";
 			else if(visitors[eaten] == null)
 				return "There's no visitors";

@@ -12,7 +12,7 @@ public class Cage implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int xCoord;
 	private int yCoord;
-	private boolean open;
+	private boolean empty;
 	private Animal animal;
 	
 	public Cage() {
@@ -22,15 +22,15 @@ public class Cage implements Serializable{
 	public Cage(int x, int y) {
 		xCoord = x;
 		yCoord = y;
-		open = false;
+		empty = true;
 		animal = null;
 	}
 	
 	public void enter(Animal animal) throws CageException {
-		if(isOpen())
+		if(isEmpty())
 			throw new CageException();
 		this.animal = animal;
-		open = true;
+		empty = false;
 	}
 	
 	public String displayAnimal() {
@@ -45,12 +45,12 @@ public class Cage implements Serializable{
 	public Animal exit() {
 		Animal tempAnimal = animal;
 		animal = null;
-		open = false;
+		empty = true;
 		return tempAnimal;
 	}
 	
-	public boolean isOpen() {
-		return open;
+	public boolean isEmpty() {
+		return empty;
 	}
 
 	protected int getxCoord() {
@@ -86,7 +86,7 @@ public class Cage implements Serializable{
 	}
 	
 	public void feed(Eatable being) throws YuckException {
-		if(isOpen())
+		if(!isEmpty())
 			animal.eat(being);
 	}	
 }

@@ -28,8 +28,8 @@ public class ManagedCage {
 		}
 	}	
 	
-	public void updatePOJO() {
-		if(view.getCodeAnimal()!=null)
+	public void save() {
+		if(!model.isEmpty())
 		{
 			view.setCodeAnimal(model.getSpecies());
 			view.setAge(model.getAnimal().getAge());
@@ -46,7 +46,7 @@ public class ManagedCage {
 	
 	public void enter(Animal animal) throws CageException {
 		model.enter(animal);
-		updatePOJO();
+		save();
 	}
 
 	public String displayAnimal() {
@@ -56,17 +56,17 @@ public class ManagedCage {
 	public Animal exit() {
 		Animal ret = null;
 		ret = model.exit();
-		updatePOJO();
+		save();
 		return ret;
 	}
 
-	public boolean isOpen() {
-		return model.isOpen();
+	public boolean isEmpty() {
+		return model.isEmpty();
 	}
 
 	public void feed() throws CageException {
 		model.feed();
-		updatePOJO();
+		save();
 	}
 
 	public boolean isEatable() throws CageException {
@@ -75,7 +75,7 @@ public class ManagedCage {
 
 	public void feed(Eatable being) throws YuckException {
 		model.feed(being);
-		updatePOJO();
+		save();
 	}
 
 	public String getSpecies() {
