@@ -2,10 +2,17 @@ package org.formation.zoo.view;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Properties;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import org.formation.farm.FarmContract;
 import org.formation.zoo.controller.Manager;
 import org.formation.zoo.model.Animal;
 import org.formation.zoo.model.Gazelle;
+import org.jboss.naming.remote.client.InitialContextFactory;
 
 public class Zoo {
 	
@@ -90,5 +97,21 @@ public class Zoo {
 				System.out.println(zoo.devour(i, j,TypesOfEatable.VISITOR));
 			}
 		zoo.display();
+		
+		System.out.println("EJB Testing");
+		Properties env = new Properties();
+		FarmContract ejb = null;
+		InitialContext ctx = null;
+		env.put("jboss.naming.client.ejb.context", true);
+		env.put(Context.INITIAL_CONTEXT_FACTORY,InitialContextFactory.class.getName());
+		env.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
+		try {
+			ctx = new InitialContext(env);
+			ejb=(FarmContract) ctx.lookup("//farm/ContractImpl!org.formation.farm.FarmContract");
+			System.out.println(ejb.getDescription());			
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }                                        
