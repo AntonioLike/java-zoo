@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import org.formation.zoo.service.CagePOJO;
 
-
+@Deprecated
 public final class DaoFactory {
 
 	private static DaoFactory instance = new DaoFactory();

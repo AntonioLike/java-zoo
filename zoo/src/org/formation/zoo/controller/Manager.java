@@ -7,30 +7,39 @@ import org.formation.zoo.model.Animal;
 import org.formation.zoo.model.Eatable;
 import org.formation.zoo.model.Visitor;
 import org.formation.zoo.persistence.Dao;
-import org.formation.zoo.persistence.DaoFactory;
 import org.formation.zoo.service.CagePOJO;
 import org.formation.zoo.technical.CageException;
 import org.formation.zoo.technical.ManagedCage;
 import org.formation.zoo.technical.YuckException;
 import org.formation.zoo.tools.Broom;
 import org.formation.zoo.view.TypesOfEatable;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public final class Manager {
-	private static Manager instance = new Manager();
+	private static ApplicationContext context = new ClassPathXmlApplicationContext("zooSpring.xml");;
+	private static Manager instance = context.getBean("Manager",Manager.class);
+	private Dao<CagePOJO> dao;
+	
+	public Dao<CagePOJO> getDao() {
+		return dao;
+	}
+
+	public void setDao(Dao<CagePOJO> dao) {
+		this.dao = dao;
+		init();
+	}
 
 	private List<ManagedCage> cages; 
-	
 	private Visitor visitors[];	
 	
 	private void init()
-	{	
-		final Dao<CagePOJO> dao = DaoFactory.getInstance().getDao();
+	{
 		cages = dao.readAll().stream().map(pojo->new ManagedCage(pojo,dao)).collect(Collectors.toList());
 	}
 	
 	private Manager() {
 		cages = new Vector<>();
-		init();
 		visitors = new Visitor[Visitor.MAX];
 	}
 	

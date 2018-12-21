@@ -5,19 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-import org.formation.zoo.service.CagePOJO;
-
-//<dependency>
-//<groupId>javax.enterprise</groupId>
-//<artifactId>cdi-api</artifactId>
-//<version>2.0.SP1</version>
-//<scope>provided</scope>
-//</dependency>
-//<dependency>
-//<groupId>javax.xml.bind</groupId>
-//<artifactId>jaxb-api</artifactId>
-//<version>2.2.11</version>
-//</dependency>	
 
 public class DaoJPA<T> implements Dao<T> {
 	private EntityManager em;
@@ -35,12 +22,12 @@ public class DaoJPA<T> implements Dao<T> {
 
 	@Override
 	public T read(int key) {
-		return (T) em.find(CagePOJO.class,key);
+		return (T) em.createNamedQuery("CagePOJO.findById").setParameter(0, key);
 	}
 
 	@Override
 	public List<T> readAll() {
-		return em.createQuery("select c from CagePOJO c").getResultList();
+		return em.createNamedQuery("CagePOJO.findAll").getResultList();
 	}
 
 	@Override

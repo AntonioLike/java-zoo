@@ -8,10 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="animal")
+@NamedQueries({
+	@NamedQuery(name="CagePOJO.findAll",query="SELECT c FROM CagePOJO c"),
+	@NamedQuery(name="CagePOJO.findById",query="SELECT c from CagePOJO c where c.idAnimal = :key")
+})
+
 public class CagePOJO implements Serializable{
 	/**
 	 * 
