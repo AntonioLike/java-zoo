@@ -1,6 +1,7 @@
 package org.formation.zoo.controller;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import org.formation.zoo.model.Animal;
 import org.formation.zoo.model.Eatable;
@@ -23,26 +24,8 @@ public final class Manager {
 	
 	private void init()
 	{	
-		Dao<CagePOJO> dao = DaoFactory.getInstance().getDao();
-		List<CagePOJO> pojos = dao.readAll();
-		for(CagePOJO pojo : pojos) 
-			cages.add(new ManagedCage(pojo,dao));
-		
-		/*try {
-			cages.get(0).enter(new Gazelle("Gazelle", 5, 70.0,10));
-			cages.get(1).enter(new Monkey("Monkey", 7, 15));
-			cages.get(2).enter(new Elephant("Elephant", 5, 7500));
-			cages.get(3).enter(new Lion("Lion",3,150.0));
-			cages.get(4).enter(new Lion());
-			cages.get(5).enter(new Lion("Leo",2,15));
-			cages.get(6).enter(new Elephant());
-			cages.get(7).enter(new Gazelle());
-			cages.get(8).enter(new Monkey());
-			cages.get(9).enter(new Elephant());
-		} catch (CageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/		
+		final Dao<CagePOJO> dao = DaoFactory.getInstance().getDao();
+		cages = dao.readAll().stream().map(pojo->new ManagedCage(pojo,dao)).collect(Collectors.toList());
 	}
 	
 	private Manager() {
@@ -50,9 +33,18 @@ public final class Manager {
 		init();
 		visitors = new Visitor[Visitor.MAX];
 	}
-
+	
 	public static Manager getInstance() {
 		return instance;
+	}
+	
+	public void addAnimal(Animal animal, int cage) {
+		try {
+			cages.get(cage).enter(animal);
+		} catch (CageException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String getAnimal(int id) {
@@ -60,7 +52,7 @@ public final class Manager {
 	}
 	
 	public String newVisitor() {
-		if(Visitor.getAmount()<10) {
+		if(Visitor.getAmount()<Visitor.MAX) {
 			visitors[Visitor.getAmount()]=new Visitor();
 			return String.join(" ", "Visitor", Integer.toString(Visitor.getAmount()),"entered");
 		}
@@ -106,23 +98,11 @@ public final class Manager {
 	}
 	
 	public String[] getAnimals() {
-		String[] animalsString = new String[cages.size()];
-		for (int i = 0; i < animalsString.length; i++) {
-			animalsString[i] = getAnimal(i);
-		}
-		return animalsString;
+		return cages.stream().map(cage->cage.toString()).collect(Collectors.toList()).toArray(new String[cages.size()]);
 	}
 	
 	public void feed() {
-		for (ManagedCage cage : cages) {
-			if(!cage.isEmpty())
-				try {
-					cage.feed();
-				} catch (CageException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-		}
+		cages.forEach(cage->cage.feed());
 	}
 	
 	public String devour(int eater, int eaten,TypesOfEatable type) {

@@ -30,6 +30,10 @@ public class ManagedCage {
 		}
 	}	
 	
+	public ManagedCage(Object pojo, Dao<?> dao) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void save() {
 		if(!model.isEmpty())
 		{
@@ -74,12 +78,12 @@ public class ManagedCage {
 		return model.isEmpty();
 	}
 
-	public void feed() throws CageException {
+	public void feed(){
 		model.feed();
 		save();
 	}
 
-	public boolean isEatable() throws CageException {
+	public boolean isEatable(){
 		return model.isEatable();
 	}
 

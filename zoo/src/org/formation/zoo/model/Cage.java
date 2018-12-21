@@ -72,12 +72,12 @@ public class Cage implements Serializable{
 		return animal.getClass().getSimpleName();
 	}	
 
-	public void feed() throws CageException{
+	public void feed(){
 		if(animal != null)
 			animal.eat();
 	}
 
-	public boolean isEatable() throws CageException {
+	public boolean isEatable(){
 		return animal instanceof Eatable;
 	}
 	

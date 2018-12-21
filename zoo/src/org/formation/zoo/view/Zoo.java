@@ -1,7 +1,11 @@
 package org.formation.zoo.view;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
+
 import org.formation.zoo.controller.Manager;
+import org.formation.zoo.model.Animal;
+import org.formation.zoo.model.Gazelle;
 
 public class Zoo {
 	
@@ -9,10 +13,7 @@ public class Zoo {
 	}
 	
 	public void display() {
-		String[] animals = Manager.getInstance().getAnimals();
-		for (int i = 0; i < animals.length; i++) {
-			System.out.println(animals[i]);
-		}
+		Arrays.asList(Manager.getInstance().getAnimals()).forEach(System.out::println);
 	}
 	
 	public void feed() {
@@ -39,6 +40,10 @@ public class Zoo {
 		return Manager.getInstance().getSpecies(i);
 	}
 	
+	public void addAnimal(Animal animal, int id) {
+		Manager.getInstance().addAnimal(animal, id);
+	}
+	
 	public int getAmountVisitors() {
 		return Manager.getInstance().getAmountVisitors();
 	}
@@ -56,7 +61,11 @@ public class Zoo {
 		zoo.display();
 		
 		zoo.feed();
-
+		
+		Gazelle gazelle = new Gazelle("Bambi", 2, 15, 5);
+		
+		zoo.addAnimal(gazelle, 1);
+		
 		zoo.newVisitor();
 		
 		for(int i=0; i<10; i++)
