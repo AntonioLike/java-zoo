@@ -53,7 +53,7 @@ public class DaoJPA<T> implements Dao<T> {
 	@Override
 	public void delete(int key) {
 		em.getTransaction().begin();
-		em.detach(key);
+		em.remove(read(key));
 		em.getTransaction().commit();
 
 	}
